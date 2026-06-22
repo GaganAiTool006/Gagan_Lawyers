@@ -659,7 +659,120 @@
     }
   }
 
+/* ===== SECTION HEAD STYLE ===== */
+  .section-head {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 48px auto;
+    padding: 0 16px;
+  }
+  
+  .section-head h2 {
+    font-family: 'Fraunces', serif; /* Serif font headings ke liye */
+    font-size: 38px;
+    color: var(--navy);
+    font-weight: 600;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+  
+  .section-head p {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 16px;
+    color: var(--grey-700);
+    line-height: 1.6;
+  }
 
+  /* ===== CATEGORY GRID STYLE ===== */
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Desktop par 4 columns */
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+  
+  /* Grid ke andar jo category cards honge unka style */
+  .cat-card {
+    background: var(--white);
+    border: 1px solid var(--grey-100);
+    border-radius: 12px;
+    padding: 32px 24px;
+    text-align: center;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+  }
+  
+  /* Hover Animation Effect */
+  .cat-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--gold); /* Gold accent border */
+    box-shadow: 0 12px 30px rgba(12, 34, 51, 0.06); /* Soft elegant shadow */
+  }
+  
+  .cat-card .icon-box {
+    width: 56px;
+    height: 56px;
+    background: var(--grey-50);
+    color: var(--navy);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px auto;
+    font-size: 24px;
+    transition: all 0.3s ease;
+  }
+  
+  .cat-card:hover .icon-box {
+    background: var(--navy);
+    color: var(--white);
+  }
+  
+  .cat-card h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 18px;
+    color: var(--navy);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  
+  .cat-card p {
+    font-size: 14px;
+    color: var(--grey-500);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* ===== MOBILE & TABLET RESPONSIVE ===== */
+  @media (max-width: 1024px) {
+    .cat-grid {
+      grid-template-columns: repeat(3, 1fr); /* Tablets par 3 columns */
+      gap: 20px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .section-head h2 {
+      font-size: 28px; /* Mobile par headings thodi choti */
+    }
+    .cat-grid {
+      grid-template-columns: repeat(2, 1fr); /* Mobile screen par 2 columns */
+      gap: 16px;
+    }
+    .cat-card {
+      padding: 24px 16px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .cat-grid {
+      grid-template-columns: 1fr; /* Bahut choti mobile screen par 1 column */
+    }
+  }
   
 </style>
 </head>
