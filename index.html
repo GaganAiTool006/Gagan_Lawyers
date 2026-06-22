@@ -632,6 +632,34 @@
       justify-content: center !important;
     }
   }
+
+@media (max-width: 1024px) {
+    .cat-grid {
+      grid-template-columns: repeat(3, 1fr); /* Tablets par 3 columns */
+      gap: 20px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .section-head h2 {
+      font-size: 28px; /* Mobile par headings thodi choti */
+    }
+    .cat-grid {
+      grid-template-columns: repeat(2, 1fr); /* Mobile screen par 2 columns */
+      gap: 16px;
+    }
+    .cat-card {
+      padding: 24px 16px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .cat-grid {
+      grid-template-columns: 1fr; /* Bahut choti mobile screen par 1 column */
+    }
+  }
+
+
   
 </style>
 </head>
