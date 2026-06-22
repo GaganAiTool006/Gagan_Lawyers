@@ -396,6 +396,107 @@
   .doc-row:hover{background:var(--grey-50);}
   .case-mini{transition:transform .2s ease, box-shadow .2s ease;}
   .case-mini:hover{transform:translateX(3px); box-shadow:0 4px 12px rgba(12,34,51,.06);}
+
+/* ===== MOBILE RESPONSIVE FIXES ===== */
+  @media(max-width: 900px) {
+    .dash-layout {
+      grid-template-columns: 1fr !important;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar {
+      display: flex !important;
+      flex-direction: row !important;
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch;
+      gap: 8px !important;
+      position: sticky !important;
+      top: 60px;
+      z-index: 100;
+      background: var(--white);
+      padding: 10px 16px !important;
+      border-bottom: 1px solid var(--grey-100);
+    }
+    .side-link {
+      white-space: nowrap !important;
+      margin-bottom: 0 !important;
+    }
+  }
+
+  @media(max-width: 640px) {
+    /* Topbar Layout Fix */
+    .topbar {
+      padding: 12px 16px !important;
+      flex-direction: column;
+      gap: 12px;
+      align-items: stretch !important;
+    }
+    .nav-links {
+      width: 100%;
+      justify-content: space-between;
+      gap: 4px !important;
+    }
+    .role-switch {
+      width: 100%;
+      justify-content: space-between;
+    }
+    .role-switch button {
+      flex: 1;
+      text-align: center;
+      padding: 6px 4px !important;
+    }
+
+    /* Grids & Cards Reset */
+    .hero-grid, .cat-grid, .feature-grid, .lawyer-grid, .trust-grid, .card-row, .case-cols {
+      grid-template-columns: 1fr !important;
+      gap: 16px !important;
+    }
+
+    /* Search Results Card Fix */
+    .result-card {
+      grid-template-columns: 1fr !important;
+      text-align: left !important;
+      gap: 14px !important;
+      padding: 16px !important;
+    }
+    .result-card > div:last-child {
+      text-align: left !important;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch !important;
+      gap: 8px;
+      border-top: 1px solid var(--grey-100);
+      padding-top: 12px;
+    }
+
+    /* Table Scrolling Issue Fix */
+    .panel {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 14px !important;
+    }
+    table {
+      display: table !important; /* Forces layout stability */
+      width: 100% !important;
+      min-width: 500px; /* Allows smooth horizontal scrolling inside panels without breaking alignment */
+    }
+
+    /* Profile View Fix */
+    .profile-top {
+      flex-direction: column !important;
+      align-items: center !important;
+      text-align: center;
+    }
+    .profile-body {
+      grid-template-columns: 1fr !important;
+      gap: 20px !important;
+    }
+    .booking-card {
+      position: relative !important;
+      top: 0 !important;
+    }
+  }
+  
 </style>
 </head>
 <body>
