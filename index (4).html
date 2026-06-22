@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vakil Connect — Find the Right Lawyer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0C2233;
+    --navy-light:#16384F;
+    --blue:#2D6E5E;
+    --blue-light:#E7F1EC;
+    --blue-mid:#9FC9B9;
+    --grey-50:#F8F6F1;
+    --grey-100:#EFEAE0;
+    --grey-300:#D8D1C2;
+    --grey-500:#8C8474;
+    --grey-700:#4B463B;
+    --ink:#1B1B17;
+    --white:#FFFFFF;
+    --gold:#B8862F;
+    --success:#2D6E5E;
+    --radius:10px;
+    --radius-lg:16px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Plus Jakarta Sans', sans-serif;
+    background:var(--grey-50);
+    color:var(--ink);
+    line-height:1.5;
+  }
+  h1,h2,h3,.serif{font-family:'Fraunces', serif; font-optical-sizing:auto;}
+  a{text-decoration:none; color:inherit;}
+  button{font-family:inherit; cursor:pointer; border:none;}
+  img{max-width:100%; display:block;}
+  .app{min-height:100vh; display:flex; flex-direction:column;}
+
+  /* ===== Top bar ===== */
+  .topbar{
+    background:var(--navy);
+    color:var(--white);
+    padding:14px 32px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky; top:0; z-index:50;
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-size:20px; font-weight:600;}
+  .brand .mark{
+    width:32px; height:32px; border-radius:8px;
+    background:var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif; font-weight:700; color:var(--navy); font-size:18px;
+  }
+  .nav-links{display:flex; gap:28px; align-items:center; font-size:14px;}
+  .nav-links a{opacity:.85; transition:opacity .15s;}
+  .nav-links a:hover{opacity:1;}
+  .role-switch{display:flex; gap:8px; background:rgba(255,255,255,.08); padding:4px; border-radius:8px;}
+  .role-switch button{
+    padding:6px 14px; border-radius:6px; font-size:13px; color:var(--white); background:transparent; opacity:.7;
+  }
+  .role-switch button.active{background:var(--blue); opacity:1; font-weight:600;}
+
+  .container{max-width:1140px; margin:0 auto; padding:0 24px; width:100%;}
+  main{flex:1;}
+
+  /* ===== Hero ===== */
+  .hero{
+    background:
+      linear-gradient(125deg, rgba(12,34,51,.94) 0%, rgba(22,56,79,.88) 55%, rgba(12,34,51,.96) 100%),
+      url('https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=1600&q=60');
+    background-size:cover;
+    background-position:center;
+    color:var(--white);
+    padding:64px 0 90px;
+  }
+  .hero-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:48px; align-items:center;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:12px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--blue-mid); font-weight:600; margin-bottom:18px;
+  }
+  .eyebrow::before{content:''; width:6px; height:6px; border-radius:50%; background:var(--gold);}
+  .hero h1{font-size:42px; font-weight:600; line-height:1.15; margin-bottom:18px;}
+  .hero p.lead{font-size:16px; color:var(--blue-mid); max-width:480px; margin-bottom:32px;}
+  .hero-cta{display:flex; gap:12px; margin-bottom:8px;}
+  .search-card{
+    background:var(--white); border-radius:var(--radius-lg);
+    padding:20px; box-shadow:0 20px 50px rgba(0,0,0,.25);
+    display:flex; flex-direction:column; gap:12px;
+  }
+  .search-row{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .field{display:flex; flex-direction:column; gap:6px;}
+  .field label{font-size:11px; color:var(--grey-500); font-weight:600; text-transform:uppercase; letter-spacing:.04em;}
+  .field select, .field input{
+    padding:10px 12px; border:1px solid var(--grey-300); border-radius:8px; font-size:14px; color:var(--ink); background:var(--white);
+  }
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:12px 22px; border-radius:8px; font-size:14px; font-weight:600;
+    transition:transform .12s, box-shadow .12s;
+  }
+  .btn-primary{background:var(--blue); color:var(--white);}
+  .btn-primary:hover{box-shadow:0 8px 20px rgba(37,99,235,.35);}
+  .btn-gold{background:var(--gold); color:var(--navy);}
+  .btn-outline{background:transparent; border:1px solid var(--grey-300); color:var(--ink);}
+  .btn-outline.light{border:1px solid rgba(255,255,255,.35); color:var(--white);}
+  .btn-block{width:100%;}
+  .btn-sm{padding:8px 14px; font-size:13px;}
+
+  .hero-illustration{
+    background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
+    border-radius:var(--radius-lg); padding:24px;
+  }
+  .stat-row{display:flex; gap:24px; margin-top:18px;}
+  .stat{flex:1;}
+  .stat .num{font-family:'Fraunces',serif; font-size:26px; font-weight:600; color:var(--white);}
+  .stat .lbl{font-size:12px; color:var(--blue-mid);}
+
+  /* ===== Sections ===== */
+  .section{padding:56px 0;}
+  .section-head{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:28px;}
+  .section-head h2{font-size:26px; font-weight:600;}
+  .section-head .sub{color:var(--grey-500); font-size:14px; margin-top:4px;}
+
+  .cat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+
+  .feature-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  .feature-card{background:var(--white); border:1px solid var(--grey-100); border-radius:var(--radius-lg); overflow:hidden; transition:transform .15s, box-shadow .15s;}
+  .feature-card:hover{transform:translateY(-2px); box-shadow:0 12px 30px rgba(12,34,51,.08);}
+  .feature-card img{width:100%; height:140px; object-fit:cover;}
+  .feature-card h3{font-size:15px; font-weight:600; padding:16px 16px 4px;}
+  .feature-card p{font-size:13px; color:var(--grey-500); padding:0 16px 16px;}
+  .cat-card{
+    background:var(--white); border:1px solid var(--grey-100); border-radius:var(--radius-lg);
+    overflow:hidden; transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s; cursor:pointer;
+  }
+  .cat-card:hover{transform:translateY(-4px); box-shadow:0 14px 32px rgba(12,34,51,.1);}
+  .cat-img-wrap{position:relative; height:90px; overflow:hidden;}
+  .cat-img{width:100%; height:100%; object-fit:cover; transition:transform .4s ease;}
+  .cat-card:hover .cat-img{transform:scale(1.08);}
+  .cat-card .icon{
+    width:34px;height:34px;border-radius:9px; background:var(--gold); color:var(--navy);
+    display:flex;align-items:center;justify-content:center; font-weight:700; font-size:12px;
+    position:absolute; left:14px; bottom:-15px; box-shadow:0 4px 10px rgba(0,0,0,.18); border:2px solid var(--white);
+  }
+  .cat-card .cat-body{padding:22px 16px 16px;}
+  .cat-card h3{font-size:15px; font-weight:600; margin-bottom:4px;}
+  .cat-card p{font-size:12px; color:var(--grey-500);}
+
+  .lawyer-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  .lawyer-card{
+    background:var(--white); border:1px solid var(--grey-100); border-radius:var(--radius-lg);
+    padding:20px; display:flex; flex-direction:column; gap:12px; transition:box-shadow .15s, transform .15s;
+  }
+  .lawyer-card:hover{box-shadow:0 12px 30px rgba(15,37,64,.08); transform:translateY(-2px);}
+  .lawyer-top{display:flex; gap:12px; align-items:center;}
+  .avatar{
+    width:52px; height:52px; border-radius:50%;
+    background:linear-gradient(145deg, var(--navy) 0%, var(--navy-light) 100%);
+    color:var(--blue-mid);
+    display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:600; font-size:18px; flex-shrink:0;
+    border:1px solid rgba(255,255,255,.08);
+  }
+  .lawyer-name{font-size:15px; font-weight:600; display:flex; align-items:center; gap:6px;}
+  .verified{
+    width:15px; height:15px; border-radius:50%; background:var(--success); color:var(--white);
+    display:flex; align-items:center; justify-content:center; font-size:9px; flex-shrink:0;
+  }
+  .lawyer-meta{font-size:12px; color:var(--grey-500);}
+  .tag-row{display:flex; gap:6px; flex-wrap:wrap;}
+  .tag{background:var(--blue-light); color:var(--blue); font-size:11px; font-weight:600; padding:4px 9px; border-radius:6px;}
+  .lawyer-stats{display:flex; justify-content:space-between; align-items:center; font-size:13px; border-top:1px solid var(--grey-100); padding-top:12px;}
+  .rating{color:var(--gold); font-weight:600;}
+  .fee{font-weight:600; color:var(--navy);}
+
+  .trust-strip{
+    background:
+      linear-gradient(rgba(248,246,241,.93), rgba(248,246,241,.93)),
+      url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1600&q=50');
+    background-size:cover; background-position:center;
+    border-top:1px solid var(--grey-100); border-bottom:1px solid var(--grey-100); padding:28px 0;
+  }
+  .trust-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:24px; text-align:center;}
+  .trust-grid .num{font-family:'Fraunces',serif; font-size:24px; font-weight:600; color:var(--navy);}
+  .trust-grid .lbl{font-size:12px; color:var(--grey-500); margin-top:2px;}
+
+  footer{background:var(--navy); color:var(--blue-mid); padding:36px 0; font-size:13px; margin-top:auto;}
+  .footer-grid{display:flex; justify-content:space-between; align-items:center;}
+
+  /* ===== Search results page ===== */
+  .search-layout{display:grid; grid-template-columns:260px 1fr; gap:28px; padding:32px 0;}
+  .filters-card{background:var(--white); border:1px solid var(--grey-100); border-radius:var(--radius-lg); padding:20px; align-self:start; position:sticky; top:80px;}
+  .filters-card h3{font-size:14px; margin-bottom:16px;}
+  .filter-group{margin-bottom:20px;}
+  .filter-group label{font-size:12px; font-weight:600; color:var(--grey-700); display:block; margin-bottom:8px;}
+  .chip-list{display:flex; flex-wrap:wrap; gap:6px;}
+  .chip{
+    border:1px solid var(--grey-300); border-radius:16px; padding:5px 12px; font-size:12px; background:var(--white); color:var(--grey-700);
+  }
+  .chip.sel{background:var(--blue); border-color:var(--blue); color:var(--white);}
+  .results-list{display:flex; flex-direction:column; gap:14px;}
+  .result-card{
+    background:var(--white); border:1px solid var(--grey-100); border-radius:var(--radius-lg); padding:18px;
+    display:grid; grid-template-columns:auto 1fr auto; gap:18px; align-items:center;
+  }
+
+  /* ===== Lawyer profile page ===== */
+  .profile-head{background:var(--white); border-bottom:1px solid var(--grey-100); padding:36px 0;}
+  .profile-top{display:flex; gap:20px; align-items:flex-start;}
+  .avatar-lg{width:88px;height:88px; border-radius:50%; background:linear-gradient(145deg, var(--navy) 0%, var(--navy-light) 100%); color:var(--blue-mid); display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-size:30px; font-weight:600; flex-shrink:0; border:1px solid rgba(255,255,255,.08);}
+  .profile-tabs{display:flex; gap:24px; border-bottom:1px solid var(--grey-100); margin-top:24px;}
+  .ptab{padding:10px 2px; font-size:14px; color:var(--grey-500); border-bottom:2px solid transparent; font-weight:500;}
+  .ptab.active{color:var(--blue); border-color:var(--blue); font-weight:600;}
+  .profile-body{display:grid; grid-template-columns:1fr 320px; gap:32px; padding:32px 0;}
+  .info-card{background:var(--white); border:1px solid var(--grey-100); border-radius:var(--radius-lg); padding:22px; margin-bottom:18px;}
+  .info-card h3{font-size:15px; margin-bottom:10px;}
+  .review-item{border-bottom:1px solid var(--grey-100); padding:14px 0;}
+  .review-item:last-child{border-bottom:none;}
+  .booking-card{background:var(--white); border:1px solid var(--grey-100); border-radius:var(--radius-lg); padding:22px; position:sticky; top:80px;}
+  .slot-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:14px 0;}
+  .slot{padding:9px; border:1px solid var(--grey-300); border-radius:8px; font-size:12px; text-align:center; background:var(--white);}
+  .slot.sel{background:var(--blue); color:var(--white); border-color:var(--blue);}
+  .mode-toggle{display:flex; gap:8px; margin-bottom:14px;}
+  .mode-toggle button{flex:1; padding:9px; border:1px solid var(--grey-300); border-radius:8px; font-size:13px; background:var(--white);}
+  .mode-toggle button.sel{background:var(--blue-light); border-color:var(--blue); color:var(--blue); font-weight:600;}
+
+  /* ===== Dashboards ===== */
+  .dash-layout{display:grid; grid-template-columns:230px 1fr; min-height:calc(100vh - 60px);}
+  .sidebar{background:var(--white); border-right:1px solid var(--grey-100); padding:24px 16px;}
+  .side-link{
+    display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:8px; font-size:14px; color:var(--grey-700); margin-bottom:2px; font-weight:500;
+  }
+  .side-link .dot{width:6px;height:6px;border-radius:50%; background:var(--grey-300);}
+  .side-link.active{background:var(--blue-light); color:var(--blue); font-weight:600;}
+  .side-link.active .dot{background:var(--blue);}
+  .dash-main{padding:28px 32px;}
+  .dash-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;}
+  .dash-head h2{font-size:22px;}
+  .card-row{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:28px;}
+  .stat-card{background:var(--white); border:1px solid var(--grey-100); border-radius:var(--radius-lg); padding:18px;}
+  .stat-card .num{font-family:'Fraunces',serif; font-size:24px; font-weight:600; color:var(--navy);}
+  .stat-card .lbl{font-size:12px; color:var(--grey-500); margin-top:2px;}
+  .panel{background:var(--white); border:1px solid var(--grey-100); border-radius:var(--radius-lg); padding:22px; margin-bottom:18px;}
+  .panel h3{font-size:15px; margin-bottom:14px;}
+  table{width:100%; border-collapse:collapse; font-size:13px;}
+  th{text-align:left; color:var(--grey-500); font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:.03em; padding:8px 10px; border-bottom:1px solid var(--grey-100);}
+  td{padding:12px 10px; border-bottom:1px solid var(--grey-100);}
+  .badge{font-size:11px; font-weight:600; padding:3px 9px; border-radius:6px;}
+  .badge.active{background:#E5F4ED; color:var(--success);}
+  .badge.pending{background:#FCEFD8; color:var(--gold);}
+  .badge.closed{background:var(--grey-100); color:var(--grey-500);}
+
+  .case-cols{display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;}
+  .case-col h4{font-size:12px; text-transform:uppercase; letter-spacing:.04em; color:var(--grey-500); margin-bottom:10px;}
+  .case-mini{background:var(--grey-50); border:1px solid var(--grey-100); border-radius:8px; padding:12px; margin-bottom:8px;}
+  .case-mini .t{font-size:13px; font-weight:600; margin-bottom:4px;}
+  .case-mini .m{font-size:11px; color:var(--grey-500);}
+
+  .doc-row{display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--grey-100);}
+  .doc-row:last-child{border-bottom:none;}
+  .doc-icon{width:32px;height:32px; border-radius:7px; background:var(--blue-light); color:var(--blue); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700;}
+
+  .chat-window{display:grid; grid-template-columns:1fr; gap:10px; max-height:340px; overflow-y:auto; padding:6px;}
+  .msg{max-width:70%; padding:10px 14px; border-radius:12px; font-size:13px;}
+  .msg.me{background:var(--blue); color:var(--white); align-self:flex-end; margin-left:auto;}
+  .msg.them{background:var(--grey-100); color:var(--ink);}
+  .video-mock{background:var(--navy); border-radius:var(--radius-lg); aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; color:var(--white); position:relative;}
+  .video-controls{position:absolute; bottom:14px; display:flex; gap:10px; left:50%; transform:translateX(-50%);}
+  .vc-btn{width:42px;height:42px; border-radius:50%; background:rgba(255,255,255,.15); color:var(--white); display:flex; align-items:center; justify-content:center;}
+  .vc-btn.end{background:#D14444;}
+
+  .hidden{display:none !important;}
+
+  @media(max-width:900px){
+    .hero-grid{grid-template-columns:1fr;}
+    .lawyer-grid{grid-template-columns:repeat(2,1fr);}
+    .cat-grid{grid-template-columns:repeat(2,1fr);}
+    .search-layout, .dash-layout, .profile-body{grid-template-columns:1fr;}
+    .case-cols{grid-template-columns:1fr;}
+    .card-row{grid-template-columns:repeat(2,1fr);}
+    .dash-layout{grid-template-columns:1fr;}
+    .sidebar{
+      display:flex; flex-direction:row; overflow-x:auto; gap:4px;
+      border-right:none; border-bottom:1px solid var(--grey-100); padding:12px 16px;
+      position:sticky; top:60px; z-index:30; background:var(--white);
+    }
+    .side-link{white-space:nowrap; flex-shrink:0;}
+    .booking-card{position:static;}
+    .filters-card{position:static;}
+  }
+
+  @media(max-width:640px){
+    .topbar{padding:12px 16px;}
+    .brand{font-size:16px; gap:8px;}
+    .brand .mark{width:28px; height:28px; font-size:15px;}
+    .nav-links{gap:8px;}
+    .nav-links > a{display:none;}
+    .role-switch{gap:2px; padding:3px;}
+    .role-switch button{padding:6px 9px; font-size:11px;}
+
+    .container{padding:0 16px;}
+    .hero{padding:36px 0 56px;}
+    .hero h1{font-size:27px; line-height:1.22;}
+    .hero p.lead{font-size:14px; max-width:none;}
+    .eyebrow{font-size:11px;}
+    .hero-illustration{padding:16px;}
+    .hero-illustration img{height:110px;}
+    .stat-row{flex-wrap:wrap; gap:16px;}
+    .stat{flex:1 1 40%;}
+    .stat .num{font-size:21px;}
+    .hero-cta{flex-direction:column; gap:10px;}
+    .hero-cta .btn{width:100%;}
+
+    .section{padding:36px 0;}
+    .section-head{flex-direction:column; align-items:flex-start; gap:6px;}
+    .section-head h2{font-size:21px;}
+    .trust-grid{grid-template-columns:repeat(2,1fr); gap:18px;}
+    .cat-grid{grid-template-columns:repeat(2,1fr); gap:12px;}
+    .cat-card .cat-body{padding:18px 14px 14px;}
+    .lawyer-grid{grid-template-columns:1fr;}
+    .feature-grid{grid-template-columns:1fr;}
+
+    .search-row{grid-template-columns:1fr;}
+
+    .result-card{grid-template-columns:1fr; text-align:left;}
+    .result-card > div:last-child{text-align:left; display:flex; align-items:center; justify-content:space-between; width:100%;}
+
+    .profile-top{flex-direction:column; align-items:flex-start; gap:14px;}
+    .profile-tabs{gap:16px; overflow-x:auto;}
+    .profile-body{padding:24px 0;}
+
+    .dash-main{padding:18px 16px;}
+    .dash-head{flex-direction:column; align-items:flex-start; gap:10px;}
+    .card-row{grid-template-columns:repeat(2,1fr); gap:10px;}
+    .stat-card{padding:14px;}
+    .stat-card .num{font-size:19px;}
+
+    table{display:block; overflow-x:auto; white-space:nowrap;}
+    .panel{padding:16px;}
+
+    .slot-grid{grid-template-columns:repeat(2,1fr);}
+    .case-cols{grid-template-columns:1fr;}
+
+    .footer-grid{flex-direction:column; gap:6px; text-align:center;}
+    .video-controls{gap:8px;}
+  }
+
+  /* ===== Animations ===== */
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(16px);} to{opacity:1; transform:translateY(0);} }
+  @keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
+  @keyframes scaleIn{ from{opacity:0; transform:scale(.94);} to{opacity:1; transform:scale(1);} }
+  @keyframes floatSlow{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(-6px);} }
+  @keyframes pulseDot{ 0%,100%{box-shadow:0 0 0 0 rgba(45,110,94,.45);} 50%{box-shadow:0 0 0 6px rgba(45,110,94,0);} }
+  @keyframes shimmer{ 0%{background-position:-200px 0;} 100%{background-position:calc(200px + 100%) 0;} }
+
+  #mainArea{animation:fadeIn .35s ease;}
+  .hero .eyebrow{animation:fadeUp .5s ease both;}
+  .hero h1{animation:fadeUp .55s ease both .05s;}
+  .hero p.lead{animation:fadeUp .6s ease both .1s;}
+  .hero-cta{animation:fadeUp .6s ease both .15s;}
+  .hero .stat-row{animation:fadeUp .6s ease both .2s;}
+  .hero-illustration{animation:scaleIn .6s ease both .15s;}
+
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  .reveal-stagger > *{opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease;}
+  .reveal-stagger.in > *{opacity:1; transform:translateY(0);}
+  .reveal-stagger.in > *:nth-child(1){transition-delay:.02s;}
+  .reveal-stagger.in > *:nth-child(2){transition-delay:.08s;}
+  .reveal-stagger.in > *:nth-child(3){transition-delay:.14s;}
+  .reveal-stagger.in > *:nth-child(4){transition-delay:.2s;}
+  .reveal-stagger.in > *:nth-child(5){transition-delay:.26s;}
+  .reveal-stagger.in > *:nth-child(6){transition-delay:.32s;}
+  .reveal-stagger.in > *:nth-child(7){transition-delay:.38s;}
+  .reveal-stagger.in > *:nth-child(8){transition-delay:.44s;}
+
+  .verified{animation:pulseDot 2.4s ease-in-out infinite;}
+  .btn{transition:transform .15s ease, box-shadow .15s ease, opacity .15s ease;}
+  .btn:hover{transform:translateY(-1px);}
+  .btn:active{transform:translateY(0) scale(.97);}
+  .lawyer-card, .result-card, .stat-card, .info-card, .panel, .feature-card{transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s ease;}
+  .lawyer-card:hover, .result-card:hover{box-shadow:0 14px 32px rgba(12,34,51,.08); transform:translateY(-3px);}
+  .stat-card:hover{box-shadow:0 10px 24px rgba(12,34,51,.07); transform:translateY(-2px);}
+  .chip, .tag, .badge{transition:transform .15s ease, background .15s ease;}
+  .side-link{transition:background .2s ease, color .2s ease, padding-left .2s ease;}
+  .side-link:hover{padding-left:16px;}
+  .slot{transition:transform .15s ease, background .15s ease, border-color .15s ease;}
+  .slot:hover{transform:translateY(-2px); border-color:var(--blue);}
+  .vc-btn{transition:transform .15s ease, background .15s ease;}
+  .vc-btn:hover{transform:scale(1.08); background:rgba(255,255,255,.25);}
+  .doc-row{transition:background .2s ease;}
+  .doc-row:hover{background:var(--grey-50);}
+  .case-mini{transition:transform .2s ease, box-shadow .2s ease;}
+  .case-mini:hover{transform:translateX(3px); box-shadow:0 4px 12px rgba(12,34,51,.06);}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <a href="#" class="brand" onclick="goTo('landing')">
+      <span class="mark">V</span> Vakil Connect
+    </a>
+    <div class="nav-links" id="publicNav">
+      <a href="#" onclick="goTo('search')">Find a lawyer</a>
+      <a href="#" onclick="goTo('lawyerProfile')">How it works</a>
+      <div class="role-switch">
+        <button class="active" data-role="client" onclick="setRole('client')">Client</button>
+        <button data-role="lawyer" onclick="setRole('lawyer')">Lawyer</button>
+        <button data-role="admin" onclick="setRole('admin')">Admin</button>
+      </div>
+    </div>
+  </div>
+
+  <main id="mainArea"></main>
+
+  <footer id="siteFooter">
+    <div class="container footer-grid">
+      <div>© 2026 Vakil Connect. Built for trust.</div>
+      <div>Privacy · Terms · Contact</div>
+    </div>
+  </footer>
+</div>
+
+<script>
+/* ===================== MOCK DATA ===================== */
+const lawyers = [
+  {id:1, name:"Adv. Rohan Mehta", initials:"RM", specs:["Corporate","Contracts"], city:"Mumbai", exp:12, fee:1500, rating:4.8, reviews:64, verified:true},
+  {id:2, name:"Adv. Sunita Sharma", initials:"SS", specs:["Family","Divorce"], city:"Delhi", exp:9, fee:1200, rating:4.9, reviews:102, verified:true},
+  {id:3, name:"Adv. Imran Qureshi", initials:"IQ", specs:["Criminal"], city:"Bikaner", exp:15, fee:2000, rating:4.7, reviews:48, verified:true},
+  {id:4, name:"Adv. Priya Nair", initials:"PN", specs:["Property","Real Estate"], city:"Bangalore", exp:7, fee:1000, rating:4.6, reviews:31, verified:true},
+  {id:5, name:"Adv. Karan Bedi", initials:"KB", specs:["Corporate","IP"], city:"Pune", exp:11, fee:1800, rating:4.8, reviews:57, verified:true},
+  {id:6, name:"Adv. Fatima Khan", initials:"FK", specs:["Family"], city:"Jaipur", exp:6, fee:900, rating:4.5, reviews:22, verified:false},
+];
+
+const categories = [
+  {n:"Criminal", c:64, l:"CR", img:"https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=400&q=60"},
+  {n:"Family", c:81, l:"FM", img:"https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=400&q=60"},
+  {n:"Corporate", c:52, l:"CO", img:"https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=400&q=60"},
+  {n:"Property", c:47, l:"PR", img:"https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?auto=format&fit=crop&w=400&q=60"},
+  {n:"Tax", c:29, l:"TX", img:"https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=400&q=60"},
+  {n:"IP & Trademark", c:18, l:"IP", img:"https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=400&q=60"},
+  {n:"Civil", c:60, l:"CV", img:"https://images.unsplash.com/photo-1589391886645-d51941baf7fb?auto=format&fit=crop&w=400&q=60"},
+  {n:"Labour", c:24, l:"LB", img:"https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=400&q=60"},
+];
+
+const clientCases = [
+  {title:"Property dispute - Sec 12", lawyer:"Adv. Priya Nair", status:"active", date:"5 Jul 2026"},
+  {title:"Contract review - ABC Pvt Ltd", lawyer:"Adv. Rohan Mehta", status:"pending", date:"—"},
+  {title:"Family settlement", lawyer:"Adv. Sunita Sharma", status:"closed", date:"12 Jan 2026"},
+];
+
+const lawyerCases = [
+  {id:"C-104", title:"State vs. Verma", client:"Aman Verma", status:"active", next:"24 Jun 2026", court:"Sessions Court, Bikaner"},
+  {id:"C-098", title:"Property boundary dispute", client:"Geeta Joshi", status:"active", next:"28 Jun 2026", court:"Civil Court"},
+  {id:"C-091", title:"Loan default notice", client:"Rakesh Soni", status:"pending", next:"—", court:"—"},
+  {id:"C-077", title:"Tenant eviction", client:"Sunil Bhatia", status:"closed", next:"—", court:"Civil Court"},
+];
+
+const pendingVerifications = [
+  {name:"Adv. Nisha Trivedi", bar:"RJ/2291/2019", submitted:"18 Jun 2026"},
+  {name:"Adv. Vikram Solanki", bar:"MH/4471/2015", submitted:"19 Jun 2026"},
+  {name:"Adv. Ayesha Siddiqui", bar:"DL/1820/2021", submitted:"20 Jun 2026"},
+];
+
+let state = { role:'client', selectedLawyer: lawyers[2], slot:null, mode:'video', clientDashTab:'appointments', lawyerDashTab:'home', adminTab:'verify' };
+
+/* ===================== RENDER HELPERS ===================== */
+function el(html){ const d=document.createElement('div'); d.innerHTML=html.trim(); return d.firstChild; }
+
+function lawyerCardHTML(l){
+  return `
+  <div class="lawyer-card">
+    <div class="lawyer-top">
+      <div class="avatar">${l.initials}</div>
+      <div>
+        <div class="lawyer-name">${l.name} ${l.verified?'<span class="verified">✓</span>':''}</div>
+        <div class="lawyer-meta">${l.city} · ${l.exp} yrs experience</div>
+      </div>
+    </div>
+    <div class="tag-row">${l.specs.map(s=>`<span class="tag">${s}</span>`).join('')}</div>
+    <div class="lawyer-stats">
+      <span class="rating">★ ${l.rating} <span style="color:var(--grey-500); font-weight:400;">(${l.reviews})</span></span>
+      <span class="fee">₹${l.fee}/session</span>
+    </div>
+    <button class="btn btn-primary btn-block btn-sm" onclick="viewLawyer(${l.id})">View profile</button>
+  </div>`;
+}
+
+function viewLawyer(id){
+  state.selectedLawyer = lawyers.find(l=>l.id===id);
+  goTo('lawyerProfile');
+}
+
+/* ===================== PAGES ===================== */
+function renderLanding(){
+  return `
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">India's trusted legal network</div>
+        <h1>Find the right lawyer.<br>Resolve it the right way.</h1>
+        <p class="lead">Connect with verified advocates across specializations, book a consultation in minutes, and manage your case securely — all in one place.</p>
+        <div class="hero-cta">
+          <button class="btn btn-gold" onclick="goTo('search')">Find a lawyer →</button>
+          <button class="btn btn-outline light" onclick="setRole('lawyer')">Join as a lawyer</button>
+        </div>
+        <div class="stat-row">
+          <div class="stat"><div class="num">2,400+</div><div class="lbl">Verified lawyers</div></div>
+          <div class="stat"><div class="num">38,000+</div><div class="lbl">Cases resolved</div></div>
+          <div class="stat"><div class="num">4.8★</div><div class="lbl">Average rating</div></div>
+        </div>
+      </div>
+      <div class="hero-illustration">
+        <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=900&q=60" alt="" style="width:100%; height:150px; object-fit:cover; border-radius:12px; margin-bottom:16px;">
+        <div class="search-card">
+          <div style="font-weight:600; font-size:15px; color:var(--ink);">Search for a lawyer</div>
+          <div class="search-row">
+            <div class="field"><label>Specialization</label>
+              <select><option>Family law</option><option>Criminal law</option><option>Corporate law</option><option>Property law</option></select>
+            </div>
+            <div class="field"><label>City</label>
+              <select><option>Bikaner</option><option>Mumbai</option><option>Delhi</option><option>Bangalore</option></select>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-block" onclick="goTo('search')">Search lawyers</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="trust-strip">
+    <div class="container trust-grid reveal-stagger">
+      <div><div class="num">100%</div><div class="lbl">Bar council verified</div></div>
+      <div><div class="num">256-bit</div><div class="lbl">Encrypted documents</div></div>
+      <div><div class="num">24/7</div><div class="lbl">Support availability</div></div>
+      <div><div class="num">₹0</div><div class="lbl">Platform sign-up fee</div></div>
+    </div>
+  </div>
+
+  <section class="section container">
+    <div class="section-head">
+      <div><h2>Browse by practice area</h2><div class="sub">Find specialists for your specific legal need</div></div>
+    </div>
+    <div class="cat-grid reveal-stagger">
+      ${categories.map(c=>`
+        <div class="cat-card" onclick="goTo('search')">
+          <div class="cat-img-wrap">
+            <img class="cat-img" src="${c.img}" alt="">
+            <div class="icon">${c.l}</div>
+          </div>
+          <div class="cat-body">
+            <h3>${c.n}</h3>
+            <p>${c.c} lawyers available</p>
+          </div>
+        </div>`).join('')}
+    </div>
+  </section>
+
+  <section class="section container">
+    <div class="section-head">
+      <div><h2>Top-rated lawyers</h2><div class="sub">Highly reviewed advocates near you</div></div>
+      <a href="#" onclick="goTo('search')" style="font-size:14px; color:var(--blue); font-weight:600;">View all →</a>
+    </div>
+    <div class="lawyer-grid reveal-stagger">
+      ${lawyers.slice(0,3).map(lawyerCardHTML).join('')}
+    </div>
+  </section>
+
+  <section class="section container">
+    <div class="section-head">
+      <div><h2>Why clients choose us</h2><div class="sub">A platform built around trust and clarity</div></div>
+    </div>
+    <div class="feature-grid reveal-stagger">
+      <div class="feature-card">
+        <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=700&q=60" alt="">
+        <h3>Verified advocates</h3>
+        <p>Every lawyer's bar council registration is checked before they go live on the platform.</p>
+      </div>
+      <div class="feature-card">
+        <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=700&q=60" alt="">
+        <h3>Confidential by design</h3>
+        <p>Encrypted documents and private consultations keep your case details secure.</p>
+      </div>
+      <div class="feature-card">
+        <img src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=700&q=60" alt="">
+        <h3>Transparent fees</h3>
+        <p>See consultation charges upfront — no hidden costs, no surprise billing.</p>
+      </div>
+    </div>
+  </section>
+  `;
+}
+
+function renderSearch(){
+  return `
+  <div class="container search-layout">
+    <aside class="filters-card">
+      <h3>Filters</h3>
+      <div class="filter-group">
+        <label>Specialization</label>
+        <div class="chip-list">
+          <span class="chip sel">All</span><span class="chip">Criminal</span><span class="chip">Family</span><span class="chip">Corporate</span><span class="chip">Property</span>
+        </div>
+      </div>
+      <div class="filter-group">
+        <label>City</label>
+        <div class="chip-list">
+          <span class="chip sel">All cities</span><span class="chip">Bikaner</span><span class="chip">Mumbai</span><span class="chip">Delhi</span>
+        </div>
+      </div>
+      <div class="filter-group">
+        <label>Experience</label>
+        <div class="chip-list"><span class="chip sel">Any</span><span class="chip">5+ yrs</span><span class="chip">10+ yrs</span></div>
+      </div>
+      <div class="filter-group">
+        <label>Fee range</label>
+        <input type="range" style="width:100%;">
+        <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--grey-500);"><span>₹500</span><span>₹3000+</span></div>
+      </div>
+      <button class="btn btn-outline btn-block btn-sm">Reset filters</button>
+    </aside>
+    <div>
+      <div class="section-head" style="margin-bottom:18px;">
+        <div><h2 style="font-size:20px;">${lawyers.length} lawyers found</h2><div class="sub">Sorted by rating</div></div>
+      </div>
+      <div class="results-list reveal-stagger">
+        ${lawyers.map(l=>`
+          <div class="result-card">
+            <div class="avatar">${l.initials}</div>
+            <div>
+              <div class="lawyer-name">${l.name} ${l.verified?'<span class="verified">✓</span>':''}</div>
+              <div class="lawyer-meta">${l.city} · ${l.exp} yrs experience</div>
+              <div class="tag-row" style="margin-top:6px;">${l.specs.map(s=>`<span class="tag">${s}</span>`).join('')}</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="rating">★ ${l.rating} <span style="color:var(--grey-500); font-weight:400;">(${l.reviews})</span></div>
+              <div class="fee" style="margin:6px 0;">₹${l.fee}/session</div>
+              <button class="btn btn-primary btn-sm" onclick="viewLawyer(${l.id})">View profile</button>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderLawyerProfile(){
+  const l = state.selectedLawyer;
+  const slots = ["10:00 AM","11:30 AM","1:00 PM","3:30 PM","5:00 PM","6:30 PM"];
+  return `
+  <div class="profile-head">
+    <div class="container">
+      <div class="profile-top">
+        <div class="avatar-lg">${l.initials}</div>
+        <div>
+          <h2 style="font-size:24px;">${l.name} <span class="verified" style="margin-left:6px;">✓</span></h2>
+          <div class="lawyer-meta" style="margin:6px 0;">${l.specs.join(' · ')} &nbsp;·&nbsp; ${l.city} &nbsp;·&nbsp; ${l.exp} years experience</div>
+          <div class="rating">★ ${l.rating} <span style="color:var(--grey-500); font-weight:400;">(${l.reviews} reviews)</span></div>
+        </div>
+      </div>
+      <div class="profile-tabs">
+        <div class="ptab active">About</div>
+        <div class="ptab">Reviews (${l.reviews})</div>
+        <div class="ptab">Availability</div>
+      </div>
+    </div>
+  </div>
+  <div class="container profile-body">
+    <div>
+      <div class="info-card" style="padding:0; overflow:hidden;">
+        <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=900&q=60" alt="" style="width:100%; height:160px; object-fit:cover;">
+        <div style="padding:22px;">
+          <h3>About</h3>
+          <p style="font-size:14px; color:var(--grey-700);">${l.name.split(' ').slice(-1)} has ${l.exp} years of experience practicing ${l.specs.join(' and ')} law, with a strong track record of client-favourable outcomes. Registered with the Bar Council, fluent in Hindi and English.</p>
+        </div>
+      </div>
+      <div class="info-card">
+        <h3>Client reviews</h3>
+        <div class="review-item"><div style="font-weight:600; font-size:13px;">Anjali R. <span class="rating" style="font-size:12px;">★★★★★</span></div><p style="font-size:13px; color:var(--grey-700); margin-top:4px;">Very clear advice and quick to respond. Helped resolve my case efficiently.</p></div>
+        <div class="review-item"><div style="font-weight:600; font-size:13px;">Mohit S. <span class="rating" style="font-size:12px;">★★★★☆</span></div><p style="font-size:13px; color:var(--grey-700); margin-top:4px;">Professional and patient in explaining the legal process step by step.</p></div>
+      </div>
+    </div>
+    <div class="booking-card">
+      <h3 style="margin-bottom:14px;">Book a consultation</h3>
+      <div class="mode-toggle">
+        <button class="${state.mode==='video'?'sel':''}" onclick="setMode('video')">Video call</button>
+        <button class="${state.mode==='chat'?'sel':''}" onclick="setMode('chat')">Chat</button>
+      </div>
+      <div class="field" style="margin-bottom:10px;"><label>Select date</label><input type="date" value="2026-06-24"></div>
+      <label style="font-size:11px; color:var(--grey-500); font-weight:600; text-transform:uppercase;">Available slots</label>
+      <div class="slot-grid">
+        ${slots.map(s=>`<div class="slot ${state.slot===s?'sel':''}" onclick="selectSlot('${s}')">${s}</div>`).join('')}
+      </div>
+      <div style="display:flex; justify-content:space-between; font-size:13px; padding:10px 0; border-top:1px solid var(--grey-100); margin-top:6px;">
+        <span style="color:var(--grey-500);">Consultation fee</span><span style="font-weight:600;">₹${l.fee}</span>
+      </div>
+      <button class="btn btn-primary btn-block" onclick="bookNow()">Confirm & pay ₹${l.fee}</button>
+    </div>
+  </div>`;
+}
+
+function selectSlot(s){ state.slot = s; render(); }
+function setMode(m){ state.mode = m; render(); }
+function bookNow(){
+  if(!state.slot){ alert("Please select a time slot first."); return; }
+  alert(`Appointment booked with ${state.selectedLawyer.name} at ${state.slot}.\n(This is a prototype — payment gateway would process ₹${state.selectedLawyer.fee} here.)`);
+  goTo('clientDash');
+}
+
+/* ----- Client dashboard ----- */
+function renderClientDash(){
+  const tab = state.clientDashTab;
+  return `
+  <div class="dash-layout">
+    <aside class="sidebar">
+      ${sideLink('appointments','My appointments',tab,'client')}
+      ${sideLink('cases','My cases',tab,'client')}
+      ${sideLink('documents','Documents',tab,'client')}
+      ${sideLink('messages','Messages',tab,'client')}
+      ${sideLink('profile','Profile',tab,'client')}
+    </aside>
+    <div class="dash-main">
+      <div class="dash-head"><h2>Welcome back, Aman</h2><button class="btn btn-primary btn-sm" onclick="goTo('search')">+ Find a lawyer</button></div>
+      ${tab==='appointments' ? clientAppointments() : ''}
+      ${tab==='cases' ? clientCasesPanel() : ''}
+      ${tab==='documents' ? documentsPanel() : ''}
+      ${tab==='messages' ? messagesPanel() : ''}
+      ${tab==='profile' ? profilePanel('Aman Verma','aman.verma@email.com','+91 98xxxxxxx21') : ''}
+    </div>
+  </div>`;
+}
+
+function sideLink(id,label,activeTab,role){
+  const fn = role==='client'?'setClientTab':(role==='lawyer'?'setLawyerTab':'setAdminTab');
+  return `<a href="#" class="side-link ${activeTab===id?'active':''}" onclick="${fn}('${id}')"><span class="dot"></span>${label}</a>`;
+}
+function setClientTab(t){ state.clientDashTab=t; render(); }
+function setLawyerTab(t){ state.lawyerDashTab=t; render(); }
+function setAdminTab(t){ state.adminTab=t; render(); }
+
+function clientAppointments(){
+  return `
+  <div class="card-row">
+    <div class="stat-card"><div class="num">2</div><div class="lbl">Upcoming</div></div>
+    <div class="stat-card"><div class="num">5</div><div class="lbl">Completed</div></div>
+    <div class="stat-card"><div class="num">3</div><div class="lbl">Active cases</div></div>
+    <div class="stat-card"><div class="num">₹3,200</div><div class="lbl">Total spent</div></div>
+  </div>
+  <div class="panel">
+    <h3>Upcoming appointment</h3>
+    <div style="display:flex; justify-content:space-between; align-items:center; background:var(--blue-light); border-radius:10px; padding:16px;">
+      <div>
+        <div style="font-weight:600;">Adv. Imran Qureshi — Criminal law</div>
+        <div style="font-size:12px; color:var(--grey-500); margin-top:4px;">24 Jun 2026, 1:00 PM · Video call</div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="goTo('consult')">Join call</button>
+    </div>
+  </div>
+  <div class="panel">
+    <h3>Past appointments</h3>
+    <table>
+      <tr><th>Lawyer</th><th>Date</th><th>Mode</th><th>Status</th></tr>
+      <tr><td>Adv. Priya Nair</td><td>10 May 2026</td><td>Chat</td><td><span class="badge active">Completed</span></td></tr>
+      <tr><td>Adv. Sunita Sharma</td><td>2 Apr 2026</td><td>Video</td><td><span class="badge active">Completed</span></td></tr>
+    </table>
+  </div>`;
+}
+
+function clientCasesPanel(){
+  return `
+  <div class="panel">
+    <h3>My cases</h3>
+    <table>
+      <tr><th>Case</th><th>Lawyer</th><th>Next hearing</th><th>Status</th></tr>
+      ${clientCases.map(c=>`<tr><td>${c.title}</td><td>${c.lawyer}</td><td>${c.date}</td><td><span class="badge ${c.status}">${c.status}</span></td></tr>`).join('')}
+    </table>
+  </div>`;
+}
+
+function documentsPanel(){
+  return `
+  <div class="panel">
+    <h3>Document vault</h3>
+    <button class="btn btn-outline btn-sm" style="margin-bottom:14px;">+ Upload document</button>
+    ${['Affidavit_signed.pdf','Property_papers.pdf','ID_proof.jpg','Court_notice_may.pdf'].map(d=>`
+      <div class="doc-row">
+        <div class="doc-icon">PDF</div>
+        <div style="flex:1;">
+          <div style="font-size:13px; font-weight:500;">${d}</div>
+          <div style="font-size:11px; color:var(--grey-500);">Uploaded 12 Jun 2026 · Encrypted</div>
+        </div>
+        <button class="btn btn-outline btn-sm">View</button>
+      </div>`).join('')}
+  </div>`;
+}
+
+function messagesPanel(){
+  return `
+  <div class="panel">
+    <h3>Messages — Adv. Imran Qureshi</h3>
+    <div class="chat-window" style="display:flex; flex-direction:column;">
+      <div class="msg them">Hello, please share the FIR copy when convenient.</div>
+      <div class="msg me">Sure, uploading it now to the document vault.</div>
+      <div class="msg them">Received, thank you. We'll discuss next steps on our call.</div>
+    </div>
+    <div style="display:flex; gap:8px; margin-top:12px;">
+      <input style="flex:1; padding:10px; border:1px solid var(--grey-300); border-radius:8px;" placeholder="Type a message...">
+      <button class="btn btn-primary btn-sm">Send</button>
+    </div>
+  </div>`;
+}
+
+function profilePanel(name,email,phone){
+  return `
+  <div class="panel" style="max-width:480px;">
+    <h3>Profile</h3>
+    <div class="field" style="margin-bottom:12px;"><label>Full name</label><input value="${name}" style="padding:10px; border:1px solid var(--grey-300); border-radius:8px;"></div>
+    <div class="field" style="margin-bottom:12px;"><label>Email</label><input value="${email}" style="padding:10px; border:1px solid var(--grey-300); border-radius:8px;"></div>
+    <div class="field" style="margin-bottom:16px;"><label>Phone</label><input value="${phone}" style="padding:10px; border:1px solid var(--grey-300); border-radius:8px;"></div>
+    <button class="btn btn-primary btn-sm">Save changes</button>
+  </div>`;
+}
+
+/* ----- Lawyer dashboard ----- */
+function renderLawyerDash(){
+  const tab = state.lawyerDashTab;
+  return `
+  <div class="dash-layout">
+    <aside class="sidebar">
+      ${sideLink('home','Dashboard',tab,'lawyer')}
+      ${sideLink('appointments','Appointments',tab,'lawyer')}
+      ${sideLink('cases','Case management',tab,'lawyer')}
+      ${sideLink('documents','Documents',tab,'lawyer')}
+      ${sideLink('earnings','Earnings',tab,'lawyer')}
+      ${sideLink('availability','Availability',tab,'lawyer')}
+    </aside>
+    <div class="dash-main">
+      <div class="dash-head"><h2>Good morning, Adv. Mehta</h2><span class="badge active">Verified</span></div>
+      ${tab==='home' ? lawyerHome() : ''}
+      ${tab==='appointments' ? lawyerAppointments() : ''}
+      ${tab==='cases' ? lawyerCasesPanel() : ''}
+      ${tab==='documents' ? documentsPanel() : ''}
+      ${tab==='earnings' ? earningsPanel() : ''}
+      ${tab==='availability' ? availabilityPanel() : ''}
+    </div>
+  </div>`;
+}
+
+function lawyerHome(){
+  return `
+  <div class="card-row">
+    <div class="stat-card"><div class="num">4</div><div class="lbl">Today's appointments</div></div>
+    <div class="stat-card"><div class="num">12</div><div class="lbl">Active cases</div></div>
+    <div class="stat-card"><div class="num">₹48,200</div><div class="lbl">This month's earnings</div></div>
+    <div class="stat-card"><div class="num">4.8★</div><div class="lbl">Client rating</div></div>
+  </div>
+  <div class="panel">
+    <h3>Today's schedule</h3>
+    <table>
+      <tr><th>Time</th><th>Client</th><th>Type</th><th>Action</th></tr>
+      <tr><td>10:00 AM</td><td>Geeta Joshi</td><td>Video consult</td><td><button class="btn btn-primary btn-sm" onclick="goTo('consult')">Join</button></td></tr>
+      <tr><td>1:00 PM</td><td>Aman Verma</td><td>Chat</td><td><button class="btn btn-outline btn-sm">Open chat</button></td></tr>
+      <tr><td>4:30 PM</td><td>Rakesh Soni</td><td>Video consult</td><td><button class="btn btn-outline btn-sm">View</button></td></tr>
+    </table>
+  </div>
+  <div class="panel">
+    <h3>Upcoming hearings</h3>
+    <table>
+      <tr><th>Case</th><th>Court</th><th>Date</th></tr>
+      <tr><td>State vs. Verma</td><td>Sessions Court, Bikaner</td><td>24 Jun 2026</td></tr>
+      <tr><td>Property boundary dispute</td><td>Civil Court</td><td>28 Jun 2026</td></tr>
+    </table>
+  </div>`;
+}
+
+function lawyerAppointments(){
+  return `
+  <div class="panel">
+    <h3>All appointments</h3>
+    <table>
+      <tr><th>Client</th><th>Date</th><th>Mode</th><th>Payment</th><th>Status</th></tr>
+      <tr><td>Geeta Joshi</td><td>24 Jun, 10:00 AM</td><td>Video</td><td>Paid</td><td><span class="badge pending">Upcoming</span></td></tr>
+      <tr><td>Aman Verma</td><td>24 Jun, 1:00 PM</td><td>Chat</td><td>Paid</td><td><span class="badge pending">Upcoming</span></td></tr>
+      <tr><td>Rakesh Soni</td><td>24 Jun, 4:30 PM</td><td>Video</td><td>Paid</td><td><span class="badge pending">Upcoming</span></td></tr>
+      <tr><td>Sunil Bhatia</td><td>18 Jun, 11:00 AM</td><td>Video</td><td>Paid</td><td><span class="badge active">Completed</span></td></tr>
+    </table>
+  </div>`;
+}
+
+function lawyerCasesPanel(){
+  return `
+  <div class="panel">
+    <h3>Case management</h3>
+    <div class="case-cols">
+      <div class="case-col"><h4>Active</h4>
+        ${lawyerCases.filter(c=>c.status==='active').map(c=>`<div class="case-mini"><div class="t">${c.title}</div><div class="m">${c.client} · Next: ${c.next}</div></div>`).join('')}
+      </div>
+      <div class="case-col"><h4>Pending</h4>
+        ${lawyerCases.filter(c=>c.status==='pending').map(c=>`<div class="case-mini"><div class="t">${c.title}</div><div class="m">${c.client}</div></div>`).join('')}
+      </div>
+      <div class="case-col"><h4>Closed</h4>
+        ${lawyerCases.filter(c=>c.status==='closed').map(c=>`<div class="case-mini"><div class="t">${c.title}</div><div class="m">${c.client}</div></div>`).join('')}
+      </div>
+    </div>
+  </div>
+  <div class="panel">
+    <h3>Case detail — State vs. Verma</h3>
+    <p style="font-size:13px; color:var(--grey-700); margin-bottom:12px;">Court: Sessions Court, Bikaner · Case no. C-104 · Client: Aman Verma</p>
+    <div style="background:var(--grey-50); border-radius:8px; padding:14px; margin-bottom:10px;">
+      <div style="font-size:12px; color:var(--grey-500); margin-bottom:4px;">Hearing note — 10 Jun 2026</div>
+      <div style="font-size:13px;">Submitted bail application. Next hearing scheduled for arguments on charges.</div>
+    </div>
+    <textarea placeholder="Add a new hearing note..." style="width:100%; padding:10px; border:1px solid var(--grey-300); border-radius:8px; font-size:13px; min-height:60px;"></textarea>
+    <button class="btn btn-primary btn-sm" style="margin-top:10px;">Add note</button>
+  </div>`;
+}
+
+function earningsPanel(){
+  return `
+  <div class="card-row">
+    <div class="stat-card"><div class="num">₹48,200</div><div class="lbl">This month</div></div>
+    <div class="stat-card"><div class="num">₹5,12,000</div><div class="lbl">Total earned</div></div>
+    <div class="stat-card"><div class="num">₹4,200</div><div class="lbl">Pending payout</div></div>
+    <div class="stat-card"><div class="num">10%</div><div class="lbl">Platform commission</div></div>
+  </div>
+  <div class="panel">
+    <h3>Transaction history</h3>
+    <table>
+      <tr><th>Date</th><th>Client</th><th>Amount</th><th>Status</th></tr>
+      <tr><td>18 Jun 2026</td><td>Sunil Bhatia</td><td>₹1,800</td><td><span class="badge active">Paid out</span></td></tr>
+      <tr><td>15 Jun 2026</td><td>Geeta Joshi</td><td>₹1,800</td><td><span class="badge active">Paid out</span></td></tr>
+      <tr><td>22 Jun 2026</td><td>Rakesh Soni</td><td>₹1,800</td><td><span class="badge pending">Pending</span></td></tr>
+    </table>
+  </div>`;
+}
+
+function availabilityPanel(){
+  const days=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  return `
+  <div class="panel">
+    <h3>Weekly availability</h3>
+    <table>
+      <tr><th>Day</th><th>Available</th><th>Hours</th></tr>
+      ${days.map((d,i)=>`<tr><td>${d}</td><td><input type="checkbox" ${i<5?'checked':''}></td><td>${i<5?'10:00 AM – 6:00 PM':'—'}</td></tr>`).join('')}
+    </table>
+    <button class="btn btn-primary btn-sm" style="margin-top:14px;">Save availability</button>
+  </div>`;
+}
+
+/* ----- Admin dashboard ----- */
+function renderAdminDash(){
+  const tab = state.adminTab;
+  return `
+  <div class="dash-layout">
+    <aside class="sidebar">
+      ${sideLink('overview','Overview',tab,'admin')}
+      ${sideLink('verify','Lawyer verification',tab,'admin')}
+      ${sideLink('users','User management',tab,'admin')}
+      ${sideLink('disputes','Support tickets',tab,'admin')}
+      ${sideLink('settings','Platform settings',tab,'admin')}
+    </aside>
+    <div class="dash-main">
+      <div class="dash-head"><h2>Admin panel</h2></div>
+      ${tab==='overview' ? adminOverview() : ''}
+      ${tab==='verify' ? adminVerify() : ''}
+      ${tab==='users' ? adminUsers() : ''}
+      ${tab==='disputes' ? adminDisputes() : ''}
+      ${tab==='settings' ? adminSettings() : ''}
+    </div>
+  </div>`;
+}
+
+function adminOverview(){
+  return `
+  <div class="card-row">
+    <div class="stat-card"><div class="num">2,418</div><div class="lbl">Total lawyers</div></div>
+    <div class="stat-card"><div class="num">19,204</div><div class="lbl">Total clients</div></div>
+    <div class="stat-card"><div class="num">186</div><div class="lbl">Bookings today</div></div>
+    <div class="stat-card"><div class="num">₹8.2L</div><div class="lbl">Revenue (month)</div></div>
+  </div>
+  <div class="panel">
+    <h3>Recent signups</h3>
+    <table>
+      <tr><th>Name</th><th>Role</th><th>Date</th><th>Status</th></tr>
+      <tr><td>Adv. Nisha Trivedi</td><td>Lawyer</td><td>18 Jun 2026</td><td><span class="badge pending">Pending verification</span></td></tr>
+      <tr><td>Rahul Desai</td><td>Client</td><td>19 Jun 2026</td><td><span class="badge active">Active</span></td></tr>
+      <tr><td>Adv. Vikram Solanki</td><td>Lawyer</td><td>19 Jun 2026</td><td><span class="badge pending">Pending verification</span></td></tr>
+    </table>
+  </div>`;
+}
+
+function adminVerify(){
+  return `
+  <div class="panel">
+    <h3>Pending lawyer verifications (${pendingVerifications.length})</h3>
+    <table>
+      <tr><th>Lawyer</th><th>Bar council no.</th><th>Submitted</th><th>Action</th></tr>
+      ${pendingVerifications.map(p=>`
+        <tr>
+          <td>${p.name}</td><td>${p.bar}</td><td>${p.submitted}</td>
+          <td><button class="btn btn-primary btn-sm" onclick="approveVerify(this)">Approve</button> <button class="btn btn-outline btn-sm">Reject</button></td>
+        </tr>`).join('')}
+    </table>
+  </div>`;
+}
+function approveVerify(btn){
+  const row = btn.closest('tr');
+  row.querySelector('td:last-child').innerHTML = '<span class="badge active">Approved</span>';
+}
+
+function adminUsers(){
+  return `
+  <div class="panel">
+    <h3>User management</h3>
+    <table>
+      <tr><th>Name</th><th>Role</th><th>City</th><th>Status</th><th>Action</th></tr>
+      ${lawyers.map(l=>`<tr><td>${l.name}</td><td>Lawyer</td><td>${l.city}</td><td><span class="badge active">Active</span></td><td><button class="btn btn-outline btn-sm">Suspend</button></td></tr>`).join('')}
+    </table>
+  </div>`;
+}
+
+function adminDisputes(){
+  return `
+  <div class="panel">
+    <h3>Support tickets</h3>
+    <table>
+      <tr><th>Subject</th><th>Raised by</th><th>Priority</th><th>Status</th></tr>
+      <tr><td>Refund not processed</td><td>Rahul Desai</td><td>High</td><td><span class="badge pending">Open</span></td></tr>
+      <tr><td>Lawyer did not join call</td><td>Sneha Kapoor</td><td>High</td><td><span class="badge pending">Open</span></td></tr>
+      <tr><td>Document upload issue</td><td>Aman Verma</td><td>Low</td><td><span class="badge closed">Resolved</span></td></tr>
+    </table>
+  </div>`;
+}
+
+function adminSettings(){
+  return `
+  <div class="panel" style="max-width:480px;">
+    <h3>Platform settings</h3>
+    <div class="field" style="margin-bottom:12px;"><label>Platform commission (%)</label><input value="10" style="padding:10px; border:1px solid var(--grey-300); border-radius:8px;"></div>
+    <div class="field" style="margin-bottom:12px;"><label>Payment gateway</label><select style="padding:10px; border:1px solid var(--grey-300); border-radius:8px;"><option>Razorpay</option><option>Stripe</option></select></div>
+    <div class="field" style="margin-bottom:16px;"><label>Support email</label><input value="support@vakilconnect.in" style="padding:10px; border:1px solid var(--grey-300); border-radius:8px;"></div>
+    <button class="btn btn-primary btn-sm">Save settings</button>
+  </div>`;
+}
+
+/* ----- Consultation screen ----- */
+function renderConsult(){
+  return `
+  <div class="container" style="padding:32px 0; max-width:900px;">
+    <h2 style="margin-bottom:16px;">Live consultation</h2>
+    <div class="video-mock">
+      <span style="opacity:.6;">Video preview</span>
+      <div class="video-controls">
+        <div class="vc-btn">🎤</div>
+        <div class="vc-btn">📷</div>
+        <div class="vc-btn end" onclick="goTo(state.role==='lawyer'?'lawyerDash':'clientDash')">⨯</div>
+      </div>
+    </div>
+    <div class="panel" style="margin-top:18px;">
+      <h3>In-call chat & file share</h3>
+      <div class="chat-window" style="display:flex; flex-direction:column;">
+        <div class="msg them">Hello, can you hear me clearly?</div>
+        <div class="msg me">Yes, loud and clear. Let's begin.</div>
+      </div>
+      <div style="display:flex; gap:8px; margin-top:12px;">
+        <input style="flex:1; padding:10px; border:1px solid var(--grey-300); border-radius:8px;" placeholder="Type a message...">
+        <button class="btn btn-outline btn-sm">📎</button>
+        <button class="btn btn-primary btn-sm">Send</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ===================== ROUTER ===================== */
+function goTo(page){
+  state.page = page;
+  render();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function setRole(role){
+  state.role = role;
+  document.querySelectorAll('.role-switch button').forEach(b=>b.classList.toggle('active', b.dataset.role===role));
+  if(role==='client') goTo('clientDash');
+  if(role==='lawyer') goTo('lawyerDash');
+  if(role==='admin') goTo('adminDash');
+}
+
+function render(){
+  const area = document.getElementById('mainArea');
+  const footer = document.getElementById('siteFooter');
+  const page = state.page || 'landing';
+  const dashPages = ['clientDash','lawyerDash','adminDash'];
+  footer.classList.toggle('hidden', dashPages.includes(page) || page==='consult');
+
+  switch(page){
+    case 'landing': area.innerHTML = renderLanding(); break;
+    case 'search': area.innerHTML = renderSearch(); break;
+    case 'lawyerProfile': area.innerHTML = renderLawyerProfile(); break;
+    case 'clientDash': area.innerHTML = renderClientDash(); break;
+    case 'lawyerDash': area.innerHTML = renderLawyerDash(); break;
+    case 'adminDash': area.innerHTML = renderAdminDash(); break;
+    case 'consult': area.innerHTML = renderConsult(); break;
+    default: area.innerHTML = renderLanding();
+  }
+
+  // restart fade-in animation on page change
+  area.style.animation = 'none';
+  requestAnimationFrame(()=>{ area.style.animation = ''; });
+
+  setupRevealObserver();
+}
+
+function setupRevealObserver(){
+  const targets = document.querySelectorAll('.reveal, .reveal-stagger');
+  if(!targets.length) return;
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('in');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.12});
+  targets.forEach(t=>obs.observe(t));
+}
+
+render();
+</script>
+</body>
+</html>
